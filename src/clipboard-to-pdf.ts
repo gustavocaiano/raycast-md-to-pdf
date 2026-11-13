@@ -3,6 +3,7 @@ import { mkdir } from "node:fs/promises";
 import { homedir } from "node:os";
 import { basename, join } from "node:path";
 import { extractTitle, fileNameFromTitle, markdownToHtmlDocument } from "./lib/markdown";
+import { addToDropover } from "./lib/dropover";
 import { ensureRenderer, htmlToPdf, uniquePath } from "./lib/pdf";
 
 export default async function Command() {
@@ -31,8 +32,15 @@ export default async function Command() {
     });
 
     await Clipboard.copy({ file: pdfPath });
-    await showHUD(`PDF copied to the clipboard: ${basename(pdfPath)}`);
+    const name = basename(pdfPath);
 
+    if (preferences.afterGenerating === "dropover") {
+      const added = await addToDropover(pdfPath);
+      await showHUD(added ? `PDF copied and added to Dropover: ${name}` : `PDF copied (Dropover not found): ${name}`);
+      return;
+    }
+
+    await showHUD(`PDF copied to the clipboard: ${name}`);
     if (preferences.afterGenerating === "open") await open(pdfPath);
     if (preferences.afterGenerating === "reveal") await showInFinder(pdfPath);
   } catch (error) {

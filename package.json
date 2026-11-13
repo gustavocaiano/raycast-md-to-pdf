@@ -51,10 +51,14 @@
       "name": "afterGenerating",
       "type": "dropdown",
       "title": "After Generating",
-      "description": "The PDF is always saved and copied to the clipboard. Optionally open it as well.",
+      "description": "The PDF is always saved and copied to the clipboard. Optionally put it on a Dropover shelf or open it as well.",
       "required": false,
-      "default": "nothing",
+      "default": "dropover",
       "data": [
+        {
+          "title": "Add to Dropover Shelf",
+          "value": "dropover"
+        },
         {
           "title": "Just Copy It",
           "value": "nothing"

@@ -1,7 +1,8 @@
 # Markdown to PDF (MVP)
 
 Extensão de Raycast: pega no Markdown que tens no clipboard (por exemplo, a resposta de um agente), gera um PDF,
-guarda-o em disco e **põe o ficheiro PDF no clipboard** — é só fazer ⌘V no Slack, Mail, WhatsApp, Finder…
+guarda-o em disco, **põe o ficheiro PDF no clipboard** (⌘V no Slack, Mail, WhatsApp, Finder…) e, se tiveres o
+Dropover, deixa-o numa shelf pronto a arrastar.
 
 > Protótipo para testar. Não está pensado para publicar na store.
 
@@ -19,7 +20,8 @@ guarda-o em disco e **põe o ficheiro PDF no clipboard** — é só fazer ⌘V n
    sozinho quando alteras o código.
 3. Copia um bloco de Markdown.
 4. No Raycast, procura **Clipboard Markdown to PDF** e carrega em Enter (podes atribuir-lhe um atalho).
-5. Aparece "PDF copied to the clipboard". Cola onde quiseres. O ficheiro fica também em `~/Downloads`.
+5. O PDF aparece numa shelf do Dropover e fica também no clipboard: arrasta-o da shelf ou cola-o com ⌘V.
+   O ficheiro fica guardado em `~/Downloads`.
 
 Na primeira execução o Raycast compila o renderer (~3 s). Precisa das Xcode Command Line Tools
 (`xcode-select --install`), que já tens se `swiftc --version` funcionar.
@@ -38,7 +40,7 @@ npm run smoke -- meu-texto.md letter
 |---|---|---|
 | Save PDFs In | Pasta onde os PDFs ficam guardados | `~/Downloads` |
 | Paper Size | A4 ou US Letter | A4 |
-| After Generating | Só copiar, abrir no Preview ou mostrar no Finder | Só copiar |
+| After Generating | Pôr numa shelf do Dropover, só copiar, abrir no Preview ou mostrar no Finder | Dropover |
 
 O nome do ficheiro vem da primeira linha do Markdown (por exemplo `# Plano de migração` → `Plano de migração.pdf`).
 Se já existir, fica `Plano de migração (2).pdf`.
@@ -49,7 +51,8 @@ Se já existir, fica `Plano de migração (2).pdf`.
 2. O HTML é escrito num ficheiro temporário e impresso para PDF por `assets/html2pdf.swift`, um programa pequeno que
    usa o **WebKit do macOS** (o mesmo motor do Safari). Por isso o texto fica selecionável, os links funcionam e
    emojis, setas, acentos, CJK e árabe aparecem sem configuração.
-3. `Clipboard.copy({ file })` do Raycast coloca o PDF no clipboard.
+3. `Clipboard.copy({ file })` do Raycast coloca o PDF no clipboard, e o serviço do macOS "Add to Dropover" (o mesmo do
+   menu Serviços) põe-no numa shelf nova. Abrir o ficheiro com o Dropover (`open -b`) não funciona no Dropover 5.
 
 O JavaScript do HTML está desligado no renderer, por isso HTML cru dentro do Markdown não corre código.
 
