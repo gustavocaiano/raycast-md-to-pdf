@@ -6,27 +6,63 @@ Dropover, deixa-o numa shelf pronto a arrastar.
 
 > Protótipo para testar. Não está pensado para publicar na store.
 
-## Como testar
+## Instalar no Raycast (passo a passo)
 
-1. Abre o Raycast (tem de estar a correr).
-2. Neste diretório:
+### O que precisas
+
+- macOS com o [Raycast](https://www.raycast.com) aberto.
+- Node.js 22.22 ou mais recente (`node -v`).
+- Xcode Command Line Tools: `swiftc --version` tem de funcionar. Se não funcionar, corre `xcode-select --install`.
+- Acesso a este repositório, que é privado: `gh auth login` ou uma chave SSH no GitHub.
+- Dropover (opcional). Sem ele, o PDF fica só no clipboard e em `~/Downloads`.
+
+### Passos
+
+1. Clona o repositório:
+
+   ```sh
+   gh repo clone gustavocaiano/raycast-md-to-pdf ~/Developer/raycast-md-to-pdf
+   cd ~/Developer/raycast-md-to-pdf
+   ```
+
+   Sem o `gh`: `git clone https://github.com/gustavocaiano/raycast-md-to-pdf.git`.
+
+2. Instala as dependências:
 
    ```sh
    npm install
+   ```
+
+   Com o npm 12 aparece um aviso de scripts bloqueados do `esbuild` e do `fsevents`. Podes ignorá-lo.
+
+3. Com o Raycast aberto, importa a extensão:
+
+   ```sh
    npm run dev
    ```
 
-   Isto importa a extensão para o Raycast em modo de desenvolvimento. Deixa-o a correr enquanto testas: recarrega
-   sozinho quando alteras o código.
-3. Copia um bloco de Markdown.
-4. No Raycast, procura **Clipboard Markdown to PDF** e carrega em Enter (podes atribuir-lhe um atalho).
-5. O PDF aparece numa shelf do Dropover e fica também no clipboard: arrasta-o da shelf ou cola-o com ⌘V.
-   O ficheiro fica guardado em `~/Downloads`.
+   Espera por `ready - built extension successfully`. Podes deixá-lo a correr (recarrega quando alteras o código) ou
+   pará-lo com Ctrl+C: a extensão fica instalada.
 
-Na primeira execução o Raycast compila o renderer (~3 s). Precisa das Xcode Command Line Tools
-(`xcode-select --install`), que já tens se `swiftc --version` funcionar.
+4. No Raycast, procura **Clipboard Markdown to PDF**. Para lhe dar um atalho, abre as definições do Raycast (⌘,) →
+   Extensions, procura o comando e clica em *Record Hotkey*.
 
-### Sem abrir o Raycast
+5. Copia um bloco de Markdown e corre o comando. Na primeira vez aparece "Preparing the PDF renderer (first run
+   only)…" enquanto compila o renderer (~3 s). Depois o PDF aparece numa shelf do Dropover, fica no clipboard
+   (⌘V para o anexar) e fica guardado em `~/Downloads`.
+
+### Atualizar
+
+```sh
+cd ~/Developer/raycast-md-to-pdf
+git pull
+npm install
+npm run dev
+```
+
+O `npm run dev` volta a instalar a versão nova no Raycast.
+
+### Testar sem abrir o Raycast
 
 ```sh
 npm run smoke                     # converte scripts/sample.md  ->  build/<título>.pdf
