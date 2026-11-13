@@ -1,0 +1,94 @@
+{
+  "$schema": "https://www.raycast.com/schemas/extension.json",
+  "name": "markdown-to-pdf",
+  "title": "Markdown to PDF",
+  "description": "Turn the Markdown on your clipboard into a PDF and put the PDF back on your clipboard, ready to paste or attach.",
+  "icon": "extension-icon.png",
+  "author": "gustavocaiano",
+  "categories": [
+    "Productivity",
+    "Developer Tools"
+  ],
+  "license": "MIT",
+  "platforms": [
+    "macOS"
+  ],
+  "commands": [
+    {
+      "name": "clipboard-to-pdf",
+      "title": "Clipboard Markdown to PDF",
+      "description": "Converts the Markdown on your clipboard into a PDF, saves it and copies the PDF file to your clipboard.",
+      "mode": "no-view"
+    }
+  ],
+  "preferences": [
+    {
+      "name": "outputFolder",
+      "type": "directory",
+      "title": "Save PDFs In",
+      "description": "Folder where the generated PDFs are saved. Defaults to Downloads.",
+      "required": false
+    },
+    {
+      "name": "paperSize",
+      "type": "dropdown",
+      "title": "Paper Size",
+      "description": "Page size of the generated PDF.",
+      "required": false,
+      "default": "a4",
+      "data": [
+        {
+          "title": "A4",
+          "value": "a4"
+        },
+        {
+          "title": "US Letter",
+          "value": "letter"
+        }
+      ]
+    },
+    {
+      "name": "afterGenerating",
+      "type": "dropdown",
+      "title": "After Generating",
+      "description": "The PDF is always saved and copied to the clipboard. Optionally open it as well.",
+      "required": false,
+      "default": "nothing",
+      "data": [
+        {
+          "title": "Just Copy It",
+          "value": "nothing"
+        },
+        {
+          "title": "Open in Preview",
+          "value": "open"
+        },
+        {
+          "title": "Reveal in Finder",
+          "value": "reveal"
+        }
+      ]
+    }
+  ],
+  "dependencies": {
+    "@raycast/api": "^2.12.0",
+    "highlight.js": "^11.12.0",
+    "marked": "^18.2.0"
+  },
+  "devDependencies": {
+    "@raycast/eslint-config": "^2.2.0",
+    "@types/node": "26.6.5",
+    "@types/react": "19.3.0",
+    "eslint": "^10.14.0",
+    "prettier": "^3.10.1",
+    "tsx": "^4.23.15",
+    "typescript": "^5.9.3"
+  },
+  "scripts": {
+    "build": "ray build -e dist",
+    "dev": "ray develop",
+    "fix-lint": "ray lint --fix",
+    "lint": "ray lint",
+    "smoke": "tsx scripts/smoke-test.ts"
+  }
+}
